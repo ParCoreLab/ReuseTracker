@@ -8,7 +8,9 @@ install:
 	PWD=`pwd` && cd hpctoolkit && ./configure --prefix=$(PWD)/reusetracker-bin --with-externals=$(PWD)/hpctoolkit-externals/x86_64-unknown-linux-gnu --with-libmonitor=$(PWD)/libmonitor-bin && make -j`nproc` && make install
 	#cd ..
 
-no-invalidation: short-rd long-rd
+accuracy:	no-invalidation invalidation
+
+no-invalidation:	short-rd long-rd
 
 short-rd:	short-rd-inc short-rd-dec short-rd-bell short-rd-multi-mod
 
@@ -47,3 +49,37 @@ long-rd-multi-mod:
 	PWD=`pwd` && HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true OMP_NUM_THREADS=32 HPCRUN_WP_REUSE_BIN_SCHEME=110000,2 /usr/bin/time -f "Elapsed Time , %e, system, %S, user, %U, memory, %M" $(PWD)/reusetracker-bin/bin/hpcrun  -o long_multi_mod_output -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 reuse-invalidation-benchs/reuse-invalidation -outer 10 -a0 100 -a1 100000 -b0 30 -b1 200000 -c0 24 -c1 400000 -d0 8 -d1 800000 -e0 7 -e1 1600000 -inv 1 2>&1 | tee long_rd_multi_mod_log
 	mkdir long_rd_multi_mod_output
 	mv *hpcrun long_rd_multi_mod_output
+
+invalidation: inv-short-rd inv-long-rd
+
+inv-short-rd:       short-rd-case-1 short-rd-case-2 short-rd-case-3
+
+short-rd-case-1:
+	PWD=`pwd` && HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true OMP_NUM_THREADS=32 HPCRUN_WP_REUSE_BIN_SCHEME=1100,2 /usr/bin/time -f "Elapsed Time , %e, system, %S, user, %U, memory, %M" $(PWD)/reusetracker-bin/bin/hpcrun  -o short_case_1_output -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 reuse-invalidation-benchs/reuse-invalidation -outer 10 -a0 50 -a1 1000 -b0 40 -b1 2000 -c0 40 -c1 4000 -d0 10 -d1 8000 -e0 3 -e1 16000 -inv 1 2>&1 | tee short_rd_case_1_log
+	mkdir short_rd_case_1_output
+	mv *hpcrun short_rd_case_1_output 
+short-rd-case-2:
+	PWD=`pwd` && HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true OMP_NUM_THREADS=32 HPCRUN_WP_REUSE_BIN_SCHEME=1100,2 /usr/bin/time -f "Elapsed Time , %e, system, %S, user, %U, memory, %M" $(PWD)/reusetracker-bin/bin/hpcrun  -o short_case_2_output -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 reuse-invalidation-benchs/reuse-invalidation -outer 10 -a0 50 -a1 500 -b0 40 -b1 1500 -c0 40 -c1 3500 -d0 10 -d1 7500 -e0 3 -e1 15500 -inv 1000 2>&1 | tee short_rd_dec_log
+	mkdir short_rd_case_2_output
+	mv *hpcrun short_rd_case_2_output
+short-rd-case-3:
+	PWD=`pwd` && HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true OMP_NUM_THREADS=32 HPCRUN_WP_REUSE_BIN_SCHEME=1100,2 /usr/bin/time -f "Elapsed Time , %e, system, %S, user, %U, memory, %M" $(PWD)/reusetracker-bin/bin/hpcrun  -o short_case_3_output -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 reuse-invalidation-benchs/reuse-invalidation -outer 10 -a0 50 -a1 2 -b0 40 -b1 1000 -c0 40 -c1 3000 -d0 10 -d1 7000 -e0 3 -e1 15000 -inv 2000 2>&1 | tee short_rd_case_3_log
+	mkdir short_rd_case_3_output
+	mv *hpcrun short_rd_case_3_output
+
+inv-long-rd:       long-rd-case-1 long-rd-case-2 long-rd-case-3
+
+long-rd-case-1:
+	PWD=`pwd` && HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true OMP_NUM_THREADS=32 HPCRUN_WP_REUSE_BIN_SCHEME=110000,2 /usr/bin/time -f "Elapsed Time , %e, system, %S, user, %U, memory, %M" $(PWD)/reusetracker-bin/bin/hpcrun  -o long_case_1_output -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 reuse-invalidation-benchs/reuse-invalidation -outer 10 -a0 50 -a1 100000 -b0 40 -b1 200000 -c0 40 -c1 400000 -d0 10 -d1 800000 -e0 3 -e1 1600000 -inv 1 2>&1 | tee long_rd_case_1_log
+	mkdir long_rd_case_1_output
+	mv *hpcrun long_rd_case_1_output 
+
+long-rd-case-2:
+	PWD=`pwd` && HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true OMP_NUM_THREADS=32 HPCRUN_WP_REUSE_BIN_SCHEME=110000,2 /usr/bin/time -f "Elapsed Time , %e, system, %S, user, %U, memory, %M" $(PWD)/reusetracker-bin/bin/hpcrun  -o long_case_2_output -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 reuse-invalidation-benchs/reuse-invalidation -outer 10 -a0 50 -a1 50000 -b0 40 -b1 150000 -c0 40 -c1 350000 -d0 10 -d1 750000 -e0 3 -e1 1550000 -inv 100000 2>&1 | tee long_rd_case_2_log
+	mkdir long_rd_case_2_output
+	mv *hpcrun long_rd_case_2_output
+
+long-rd-case-3:
+	PWD=`pwd` && HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true OMP_NUM_THREADS=32 HPCRUN_WP_REUSE_BIN_SCHEME=110000,2 /usr/bin/time -f "Elapsed Time , %e, system, %S, user, %U, memory, %M" $(PWD)/reusetracker-bin/bin/hpcrun  -o long_case_3_output -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 reuse-invalidation-benchs/reuse-invalidation -outer 10 -a0 50 -a1 2 -b0 40 -b1 100000 -c0 40 -c1 300000 -d0 10 -d1 700000 -e0 3 -e1 1500000 -inv 200000 2>&1 | tee long_rd_case_3_log
+	mkdir long_rd_case_3_output
+	mv *hpcrun long_rd_case_3_output
