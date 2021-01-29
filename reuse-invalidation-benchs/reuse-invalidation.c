@@ -9,20 +9,18 @@ int main (int argc, char* argv[]) {
 	int num_threads = 0;
 	char shared_array[4000000];
 	
-	int outer = 10, a = 100, a1 = 1000, b = 30, b1 = 2000, c = 24, c1 = 4000, d = 8, d1 = 8000, e = 7, e1 = 16000, inv = 1;
-	
+	int outer = 10, a = 100, a1 = 1000, b = 30, b1 = 2000, c = 24, c1 = 4000, d = 8, d1 = 8000, e = 7, e1 = 16000, inv = 1;	
 	for (int i = 1; i < argc; ++i) {
         	if (strncmp(argv[i], "-outer", 7) == 0) {
             		if (i + 1 < argc) { // Make sure we aren't at the end of argv!
-				fprintf(stderr, "argv: %s\n", argv[i+1]);
                 		outer = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
             		} else { // Uh-oh, there was no argument to the destination option.
                   		fprintf(stderr, "There is an error in parsing the command line argument 1\n");
                 		return 1;
             		}  
-        	} else if (strncmp(argv[i], "-a", 2) == 0){
+        	} else if (strncmp(argv[i], "-a0", 3) == 0){
             		if (i + 1 < argc) { // Make sure we aren't at the end of argv!
-                		a = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
+				a = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
             		} else { // Uh-oh, there was no argument to the destination option.
                   		fprintf(stderr, "There is an error in parsing the command line argument 2\n");
                 		return 1;
@@ -34,7 +32,7 @@ int main (int argc, char* argv[]) {
                   		fprintf(stderr, "There is an error in parsing the command line argument 3\n");
                 		return 1;
             		}
-        	} else if (strncmp(argv[i], "-b", 2) == 0){
+        	} else if (strncmp(argv[i], "-b0", 3) == 0){
             		if (i + 1 < argc) { // Make sure we aren't at the end of argv!
                 		b = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
             		} else { // Uh-oh, there was no argument to the destination option.
@@ -48,7 +46,7 @@ int main (int argc, char* argv[]) {
                   		fprintf(stderr, "There is an error in parsing the command line argument 5\n");
                 		return 1;
             		}
-        	} else if (strncmp(argv[i], "-c", 2) == 0){
+        	} else if (strncmp(argv[i], "-c0", 3) == 0){
             		if (i + 1 < argc) { // Make sure we aren't at the end of argv!
                 		c = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
             		} else { // Uh-oh, there was no argument to the destination option.
@@ -62,7 +60,7 @@ int main (int argc, char* argv[]) {
                   		fprintf(stderr, "There is an error in parsing the command line argument 7\n");
                 		return 1;
             		}
-        	} else if (strncmp(argv[i], "-d", 2) == 0){
+        	} else if (strncmp(argv[i], "-d0", 3) == 0){
             		if (i + 1 < argc) { // Make sure we aren't at the end of argv!
                 		d = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
             		} else { // Uh-oh, there was no argument to the destination option.
@@ -76,7 +74,7 @@ int main (int argc, char* argv[]) {
                   		fprintf(stderr, "There is an error in parsing the command line argument 9\n");
                 		return 1;
             		}
-        	} else if (strncmp(argv[i], "-e", 2) == 0){
+        	} else if (strncmp(argv[i], "-e0", 3) == 0){
             		if (i + 1 < argc) { // Make sure we aren't at the end of argv!
                 		e = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
             		} else { // Uh-oh, there was no argument to the destination option.
@@ -90,7 +88,7 @@ int main (int argc, char* argv[]) {
                   		fprintf(stderr, "There is an error in parsing the command line argument 11\n");
                 		return 1;
             		}
-        	} else if (strncmp(argv[i], "-inv", 5) == 0){
+        	} else if (strncmp(argv[i], "-inv", 4) == 0){
             		if (i + 1 < argc) { // Make sure we aren't at the end of argv!
                 		inv = atoi(argv[++i]); // Increment 'i' so we don't get the argument as the next argv[i].
             		} else { // Uh-oh, there was no argument to the destination option.
