@@ -104,4 +104,4 @@ parsec_build:
 	cd parsec_experiment && ./parsec_build.sh
 
 parsec_l1_l3:
-	PWD=`pwd` && cd parsec_experiment && ./parsec_l1_l3.sh $(PWD)/reusetracker-bin
+	PWD=`pwd` && cd parsec_experiment && ./parsec_l1_l3.sh $(PWD)/reusetracker-bin && ./convert_time_to_stack.sh
