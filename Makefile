@@ -8,7 +8,10 @@ install:
 	PWD=`pwd` && cd hpctoolkit && ./configure --prefix=$(PWD)/reusetracker-bin --with-externals=$(PWD)/hpctoolkit-externals/x86_64-unknown-linux-gnu --with-libmonitor=$(PWD)/libmonitor-bin && make -j`nproc` && make install
 	#cd ..
 
-accuracy:	no-invalidation invalidation
+accuracy:	accuracy-install no-invalidation invalidation
+
+accuracy-install:
+	gcc reuse-invalidation-benchs/reuse-invalidation.c -o reuse-invalidation-benchs/reuse-invalidation -fopenmp
 
 no-invalidation:	short-rd long-rd
 
