@@ -1,22 +1,37 @@
 Requirement
 ===============
-Linux kernel version 5.0.0 or higher
+- Linux kernel version 5.0.0 or higher
+- Python 3.x
+- Python's scipy module installed with "pip3 install scipy" command
+- Python's termcolor module installed with "pip3 install termcolor" command
 
 Installation
 ===============
-1. Install hpctoolkit-externals from https://github.com/WitchTools/hpctoolkit-externals 
-by typing the following command in the directory of hpctoolkit-externals:
-	./configure && make && make install
-2. Install the custom libmonitor from https://github.com/WitchTools/libmonitor 
-by typing the following command in the directory of libmonitor:
-	./configure --prefix=<libmonitor-installation directory> && make && make install 
-3. Install HPCToolkit with ReuseTracker extensions from 
-https://github.com/ParCoreLab/hpctoolkit pointing to the installations of 
-hpctoolkit-externals and libmonitor from steps \#1 and \#2. 
-Assuming that the underlying architecture is x86_64 and compiler is gcc, this step is performed with the following commands.
+To install ReuseTracker and all of its dependences, type "make install".
 
-a. ./configure --prefix=<targeted installation directory for ComDetective> --with-externals=<directory of hpctoolkit externals>/x86_64-unknown-linux-gnu --with-libmonitor=<libmonitor-installation directory> 
+Reproducing Results from The Paper
+===============
+1. To reproduce the results presented in the "Accuracy without Invalidation" 
+and "Accuracy with Invalidation" subsections in the paper, type "make accuracy".
+The resulting histograms can be found in each *_output folder with file name 
+reuse-invalidation-PID.reuse.hpcrun.
+2. To reproduce the results presented in the "Reuse Distances of PARSEC Benchmarks" 
+section, type "make parsec".  The resulting histograms are in the following files.
+	- parsec_experiment/blackscholes_rd_l1_output/blackscholes-PID.reuse.hpcrun.bin
+	- parsec_experiment/blackscholes_rd_spatial_l1_output/blackscholes-PID.reuse.hpcrun.bin 
+	- parsec_experiment/bodytrack_rd_l1_output/bodytrack-PID.reuse.hpcrun.bin
+	- parsec_experiment/bodytrack_rd_spatial_l1_output/bodytrack-PID.reuse.hpcrun.bin
+	- parsec_experiment/streamcluster_rd_l3_output/streamcluster-PID.reuse.hpcrun.bin
+        - parsec_experiment/streamcluster_rd_spatial_l1_output/streamcluster-PID.reuse.hpcrun.bin 
+        - parsec_experiment/freqmine_rd_l1_output/freqmine-PID.reuse.hpcrun.bin
+        - parsec_experiment/freqmine_rd_spatial_l1_output/freqmine-PID.reuse.hpcrun.bin
 
-b. make
+Running ReuseTracker to profile An Individual Application 
+===============
+- To profile the private cache temporal reuse distance of an application, run the following command.
 
-c. make install
+HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_REUSE_BIN_SCHEME=4000,2 HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true reusetracker-bin/bin/hpcrun -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 <application's name> <command line arguments for the application>
+
+- To profile the shared cache temporal reuse distance of an application, run the following command.
+
+HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=true HPCRUN_WP_REUSE_BIN_SCHEME=4000,2 HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true reusetracker-bin/bin/hpcrun -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 <application's name> <command line arguments for the application>
