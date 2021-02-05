@@ -12,7 +12,8 @@ To install ReuseTracker and all of its dependences, type "make install".
 Reproducing Results from The Paper
 ===============
 1. To reproduce the results presented in the "Accuracy without Invalidation" 
-and "Accuracy with Invalidation" subsections in the paper, type "make accuracy".
+and "Accuracy with Invalidation" subsections in the paper, ensure that you have enough 
+maximum stack size by typing "ulimit -s 4194304" and run the experiment by typing "make accuracy".
 The resulting histograms can be found in each *_output folder with file name 
 reuse-invalidation-PID.reuse.hpcrun.
 2. To reproduce the results presented in the "Reuse Distances of PARSEC Benchmarks" 
