@@ -4,6 +4,9 @@ Requirement
 - Python 3.x
 - Python's scipy module installed with "pip3 install scipy" command
 - Python's termcolor module installed with "pip3 install termcolor" command
+- To run perf_event_open system call without having to use sudo access,
+set the value of perf_event_paranoid to -1 by typing the following command:
+sudo sysctl -w kernel.perf_event_paranoid=-1
 
 Installation
 ===============
