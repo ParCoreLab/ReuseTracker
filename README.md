@@ -41,7 +41,7 @@ HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=false HPCRUN_WP_REUSE_
 HPCRUN_WP_REUSE_PROFILE_TYPE="TEMPORAL" HPCRUN_PROFILE_L3=true HPCRUN_WP_REUSE_BIN_SCHEME=4000,2 HPCRUN_WP_CACHELINE_INVALIDATION=true HPCRUN_WP_DONT_FIX_IP=true HPCRUN_WP_DONT_DISASSEMBLE_TRIGGER_ADDRESS=true reusetracker-bin/bin/hpcrun -e WP_REUSETRACKER -e MEM_UOPS_RETIRED:ALL_LOADS@100000 -e MEM_UOPS_RETIRED:ALL_STORES@100000 <./your_executable> your_args
 
 
-To attribute the detected uses, reuses and the total of reuse distances captured between each use-reuse pair to their locations in source code lines and program stacks,
+- To attribute the detected uses, reuses and the total of reuse distances captured between each use-reuse pair to their locations in source code lines and program stacks,
 you need to take the following steps:
 
 a. Download and extract a binary release of hpcviewer from
