@@ -12,7 +12,7 @@ Installation
 ===============
 To install ReuseTracker and all of its dependences, type "make install".
 
-Reproducing Results from The Paper
+Reproducing Results presented in The Paper
 ===============
 1. To reproduce the results presented in the "Accuracy without Invalidation" 
 and "Accuracy with Invalidation" subsections in the paper, ensure that you have enough 
