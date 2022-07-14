@@ -1,4 +1,4 @@
-Requirement
+Requirements
 ===============
 - Linux kernel version 5.0.0 or higher
 - Python 3.x
