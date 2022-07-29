@@ -111,3 +111,6 @@ parsec_build:
 
 parsec_l1_l3:
 	PWD=`pwd` && cd parsec_experiment && ./parsec_l1_l3.sh $(PWD)/reusetracker-bin && ./convert_time_to_stack.sh
+
+parsec_l1_l3_basarim:
+	PWD=`pwd` && cd parsec_experiment && ./parsec_l1_l3_basarim.sh $(PWD)/reusetracker-bin && ./convert_time_to_stack_basarim.sh
